@@ -17,10 +17,17 @@ public class GetDirections {
 	public static void main(String[] args) throws Exception {
 
 		GetDirections d = new GetDirections();
-		d.sendGet("Duke University East Campus", "Durham Athletic Park");
+		ArrayList<Point> myPoints = d.sendGet("Duke University East Campus", "Durham Athletic Park");
+		ReadPoints r = new ReadPoints();
+		ArrayList<Accident> myAccidents = r.read("bike-data.json");
+		for(Point p: myPoints)
+		{
+			
+		}
+		
 	}
 
-	private void sendGet(String start, String destination) throws Exception {
+	private ArrayList<Point> sendGet(String start, String destination) throws Exception {
 
 		start = start.replace(" ", "+");
 		destination = destination.replace(" ", "+");
@@ -76,6 +83,9 @@ public class GetDirections {
 				points.add(p1);
 			}
 		}
-		System.out.println(points);
+		return points;
+		
+		
 	}
+	
 }

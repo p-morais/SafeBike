@@ -1,0 +1,18 @@
+public class Accident extends Pointz{
+	
+	double myLatitude;
+	double myLongitude;
+	String myDescription;
+	
+	public Accident(double l1, double l2, String description)
+	{
+		myLatitude = l1;
+		myLongitude = l2;
+		myDescription = description; 
+	}
+	
+	public String toString()
+	{
+		return myDescription + ": [" + myLatitude + ", " + myLongitude + "]";
+	}
+}

@@ -1,0 +1,106 @@
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.*;
+import org.json.*;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+import javax.net.ssl.HttpsURLConnection;
+
+
+public class GetDirections {
+
+	private final String USER_AGENT = "Mozilla/5.0";
+
+	public static void main(String[] args) throws Exception {
+
+		GetDirections d = new GetDirections();
+		d.sendGet("Duke University East Campus", "Durham Athletic Park");
+		d.findAccidents()
+	}
+
+	private void sendGet(String start, String destination) throws Exception {
+
+		start = start.replace(" ", "+");
+		destination = destination.replace(" ", "+");
+		
+		String url = "https://maps.googleapis.com/maps/api/directions/json?origin=" + start + "&destination=" + destination + "&mode=biking&key=AIzaSyD7YNcgMTNrVTnrduaYUKCCIyKn3GW3VO4";
+
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+		// optional default is GET
+		con.setRequestMethod("GET");
+
+		//add request header
+		con.setRequestProperty("User-Agent", USER_AGENT);
+
+		int responseCode = con.getResponseCode();
+		System.out.println("\nSending 'GET' request to URL : " + url);
+		System.out.println("Response Code : " + responseCode);
+
+		BufferedReader in = new BufferedReader(
+				new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+		in.close();
+
+		//print result
+		//System.out.println(response.toString());
+
+		String responseStr = response.toString();
+		JSONObject json = new JSONObject(responseStr);
+		
+		JSONObject routes = json.getJSONArray("routes").getJSONObject(0);
+		JSONObject legs = routes.getJSONArray("legs").getJSONObject(0);
+		JSONArray steps = legs.getJSONArray("steps");
+		
+		ArrayList<Point> points = new ArrayList<>();
+		
+		for(int i=0; i<steps.length(); i++) {
+			JSONObject step = steps.getJSONObject(i);
+			//System.out.println(step);
+			JSONObject st = step.getJSONObject("start_location");
+			
+			
+			Point p = new Point(st.getDouble("lat"), st.getDouble("lng"));
+			points.add(p);
+			if(i == steps.length() - 1) {
+				JSONObject end = step.getJSONObject("end_location");
+				Point p1 = new Point(end.getDouble("lat"), end.getDouble("lng"));
+				points.add(p1);
+			}
+		}
+		System.out.println(points);
+	}
+	
+	public ArrayList<Accident> findAccidents()
+	{
+
+    	ArrayList<Accident> oops = new ArrayList<>();
+    	FileReader file = new FileReader("bike-data.json");
+        JSONParser parser = new JSONParser();
+        JSONArray jsonArray = (JSONArray) parser.parse(file);
+        
+        for (Object o : jsonArray) {
+            JSONObject accident = (JSONObject) o;
+            JSONObject fields = (JSONObject)accident.get("fields");
+            JSONArray location = (JSONArray)fields.get("location");
+            double l1 = (double) location.get(0);
+            double l2 = (double) location.get(1);
+            String description = (String)fields.get("crash_type");
+            
+             oops.add(new Accident(l1, l2, description));
+        }
+        return oops;
+	}
+}

@@ -1,4 +1,4 @@
-public class Accident {
+public class Accident{
 	
 	double myLatitude;
 	double myLongitude;

@@ -9,11 +9,14 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class ReadPoints {
-    public static void main(String[] args) throws FileNotFoundException,
-            IOException, ParseException {
-    	
+    
+	String myDataSet;
+	
+	public ArrayList<Accident> read(String dataFile) throws IOException, ParseException
+    {
+    	myDataSet = dataFile;
     	ArrayList<Accident> oops = new ArrayList<>();
-    	FileReader file = new FileReader("bike-data.json");
+    	FileReader file = new FileReader(myDataSet);
         JSONParser parser = new JSONParser();
         JSONArray jsonArray = (JSONArray) parser.parse(file);
         
@@ -27,10 +30,7 @@ public class ReadPoints {
             
              oops.add(new Accident(l1, l2, description));
         }
-        for (Accident a:oops)
-        {
-        	System.out.println(a);
-        }
+        return oops;
 
     }
   
