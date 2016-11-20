@@ -1,0 +1,11 @@
+public class Accident {
+	double myLatitude;
+	double myLongitude;
+	String myDescription;
+	public Accident(double l1, double l2, String description)
+	{
+		double myLatitude = l1;
+		double myLongitude = l2;
+		String myDescription = description; 
+	}
+}

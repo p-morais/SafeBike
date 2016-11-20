@@ -1,0 +1,28 @@
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+public class ReadPoints {
+    public static void main(String[] args) throws FileNotFoundException,
+            IOException, ParseException {
+
+        JSONParser parser = new JSONParser();
+        JSONArray jsonArray = (JSONArray) parser.parse(new FileReader(
+                "bike-data.json"));
+
+        for (Object o : jsonArray) {
+            JSONObject accident = (JSONObject) o;
+
+            String locationCoordinates = (String) accident.get("location");
+            System.out.println("Location::::" + locationCoordinates);
+            System.out.println();
+
+        }
+
+    }
+}
