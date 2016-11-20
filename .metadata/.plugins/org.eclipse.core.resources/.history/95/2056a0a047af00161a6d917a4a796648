@@ -15,25 +15,16 @@ public class GetDirections {
 	private final String USER_AGENT = "Mozilla/5.0";
 
 	public static void main(String[] args) throws Exception {
-		Scanner in = new Scanner(System.in);
-		System.out.println("Enter start address: ");
-		String first = in.nextLine();
-		System.out.println("Enter finish address: ");
-		String second = in.nextLine();
+
 		GetDirections d = new GetDirections();
-		ArrayList<Point> myPoints = d.sendGet(first, second);
+		ArrayList<Point> myPoints = d.sendGet("Duke University Golf Club, 3001 Cameron Boulevard, Durham, NC 27705", "Durham Bulls, 409 Blackwell Street, Durham, NC 27701");
 		ReadPoints r = new ReadPoints();
 		ArrayList<Accident> myAccidents = r.read("bike-data.json");
+		System.out.println(myPoints);
 		HashSet<Accident> allAccidents = d.accidentsOnWay(myPoints, myAccidents);
-		System.out.println("There has been " + allAccidents.size() + " bike accidents on your route." );
-		System.out.println("Be careful at:");
-		
-		if(allAccidents.size() > 0)
+		for (Accident oopsies: allAccidents)
 		{
-			for (Accident oops: allAccidents)
-			{
-				System.out.println(oops);
-			}
+			System.out.println(oopsies);
 		}
 	}
 
@@ -79,8 +70,8 @@ public class GetDirections {
 		con.setRequestProperty("User-Agent", USER_AGENT);
 
 		int responseCode = con.getResponseCode();
-		//System.out.println("\nSending 'GET' request to URL : " + url);
-		//System.out.println("Response Code : " + responseCode);
+		System.out.println("\nSending 'GET' request to URL : " + url);
+		System.out.println("Response Code : " + responseCode);
 
 		BufferedReader in = new BufferedReader(
 				new InputStreamReader(con.getInputStream()));
