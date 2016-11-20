@@ -15,10 +15,41 @@ public class Point{
 		return longitude;
 	}
 	
-	public String toString()
-	{
-		return ": [" + latitude + ", " +longitude + "]";
-	}
+    public String toString throws Exception {
+        String url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&sensor=true";
+        
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        
+        // optional default is GET
+        con.setRequestMethod("GET");
+        
+        //add request header
+        con.setRequestProperty("User-Agent", "Mozilla/5.0");
+        
+        int responseCode = con.getResponseCode();
+        System.out.println("\nSending 'GET' request to URL : " + url);
+        System.out.println(url);
+        System.out.println("Response Code : " + responseCode);
+        
+        BufferedReader in = new BufferedReader(
+                                               new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+        
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+        
+        //print result
+        //System.out.println(response.toString());
+        
+        String responseStr = response.toString();
+        JSONObject json = new JSONObject(responseStr).getJSONArray("results").getJSONObject(0);
+        
+        return json.getString("formatted_address");
+    }
 
 	public double getDistance(Point p){
 		double lat = p.getLatitude() - this.getLatitude();
