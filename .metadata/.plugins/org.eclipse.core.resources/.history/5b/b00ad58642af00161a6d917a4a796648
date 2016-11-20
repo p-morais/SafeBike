@@ -1,0 +1,30 @@
+public class Accident{
+	
+	double myLatitude;
+	double myLongitude;
+	String myDescription;
+	
+	public Accident(double l1, double l2, String description)
+	{
+		myLatitude = l1;
+		myLongitude = l2;
+		myDescription = description; 
+	}
+	
+	public String toString()
+	{
+		return myDescription + ": [" + myLatitude + ", " + myLongitude + "]";
+	}
+	
+	public boolean inRadius(Point p)
+	{
+		double lat = p.getLatitude() - myLatitude;
+		double longitude = p.getLongitude() - myLongitude;
+		double squ = Math.pow(longitude*longitude + lat*lat, .5);
+		if (squ < .005)
+		{
+			return true;
+		}
+		return false;
+	}
+}

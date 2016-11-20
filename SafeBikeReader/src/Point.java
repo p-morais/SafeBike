@@ -23,7 +23,7 @@ public class Point{
 	public double getDistance(Point p){
 		double lat = p.getLatitude() - this.getLatitude();
 		double longitude = p.getLongitude() - this.getLongitude();
-		double squ = Math.pow(longitude*longitude, lat*lat);
+		double squ = Math.pow(longitude*longitude + lat*lat, .5);
 		return squ;
 	}
     

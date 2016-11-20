@@ -27,8 +27,10 @@ public class ReadPoints {
             double l1 = (double) location.get(0);
             double l2 = (double) location.get(1);
             String description = (String)fields.get("crash_type");
+            long objectid = (long)fields.get("objectid");
+
             
-             oops.add(new Accident(l1, l2, description));
+             oops.add(new Accident(l1, l2, description, objectid));
         }
         return oops;
 

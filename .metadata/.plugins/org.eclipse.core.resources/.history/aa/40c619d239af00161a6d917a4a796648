@@ -1,0 +1,18 @@
+public class Accident extends Point{
+	
+	double myLatitude;
+	double myLongitude;
+	String myDescription;
+	
+	public Accident(double l1, double l2, myDescription)
+	{
+		myLatitude = l1;
+		myLongitude = l2;
+		myDescription = description; 
+	}
+	
+	public String toString()
+	{
+		return myDescription + ": [" + myLatitude + ", " + myLongitude + "]";
+	}
+}
