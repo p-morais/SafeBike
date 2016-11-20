@@ -20,17 +20,18 @@ public class GetDirections {
 		ArrayList<Point> myPoints = d.sendGet("Duke University East Campus", "Durham Athletic Park");
 		ReadPoints r = new ReadPoints();
 		ArrayList<Accident> myAccidents = r.read("bike-data.json");
-		
+		d.accidentsOnWay(myPoints, myAccidents);
 	}
 
 	private ArrayList<Accident> accidentsOnWay(ArrayList<Point> points, ArrayList<Accident> accidents){
+		ArrayList<Accident> dangers = new ArrayList<Accident>();
 		for(int i=0; i<points.size() - 1; i++){
 			Point first = points.get(i);
 			Point second = points.get(i+1);
-			
-			
+			double distance = first.getDistance(second);
+			System.out.println(distance);
 		}
-		
+		return dangers;
 	}
 	
 	private ArrayList<Point> sendGet(String start, String destination) throws Exception {
