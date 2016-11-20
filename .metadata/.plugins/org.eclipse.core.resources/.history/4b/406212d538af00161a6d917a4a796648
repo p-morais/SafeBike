@@ -20,19 +20,16 @@ public class GetDirections {
 		ArrayList<Point> myPoints = d.sendGet("Duke University East Campus", "Durham Athletic Park");
 		ReadPoints r = new ReadPoints();
 		ArrayList<Accident> myAccidents = r.read("bike-data.json");
-		
+		for(Point p: myPoints)
+		{
+			System.out.println(p);
+		}
+		for (Accident l: myAccidents)
+		{
+			System.out.println(l);
+		}
 	}
 
-	private ArrayList<Accident> accidentsOnWay(ArrayList<Point> points, ArrayList<Accident> accidents){
-		for(int i=0; i<points.size() - 1; i++){
-			Point first = points.get(i);
-			Point second = points.get(i+1);
-			
-			
-		}
-		
-	}
-	
 	private ArrayList<Point> sendGet(String start, String destination) throws Exception {
 
 		start = start.replace(" ", "+");

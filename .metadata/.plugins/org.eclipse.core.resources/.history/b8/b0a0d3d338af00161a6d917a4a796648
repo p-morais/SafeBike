@@ -20,10 +20,4 @@ public class Point{
 		return ": [" + latitude + ", " +longitude + "]";
 	}
 
-	public double getDistance(Point p){
-		double lat = p.getLatitude() - this.getLatitude();
-		double longitude = p.getLongitude() - this.getLongitude();
-		double squ = Math.pow(longitude*longitude, lat*lat);
-		return squ;
-	}
 }
