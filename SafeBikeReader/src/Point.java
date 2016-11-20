@@ -26,4 +26,10 @@ public class Point{
 		double squ = Math.pow(longitude*longitude, lat*lat);
 		return squ;
 	}
+    
+    public boolean isWithin(Point other) {
+        double radius = 0.0;    //this is changed when we decide how far/close two points need to be
+        if(getDistance(other) < radius) return true;
+        return false;
+    }
 }
