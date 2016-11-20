@@ -1,10 +1,13 @@
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Stack;
 import java.util.*;
 import org.json.*;
 
+import javax.net.ssl.HttpsURLConnection;
 
 
 public class GetDirections {
@@ -17,23 +20,19 @@ public class GetDirections {
 		String first = in.nextLine();
 		System.out.println("Enter finish address: ");
 		String second = in.nextLine();
-		
-		
 		GetDirections d = new GetDirections();
-		ArrayList<Point> myPoints = d.sendGet(first, second);		//gets the steps for the address using coordinates
+		ArrayList<Point> myPoints = d.sendGet(first, second);
 		ReadPoints r = new ReadPoints();
-		ArrayList<Accident> myAccidents = r.read("bike-data.json");	//reads in a file that stores the bike data
-		HashSet<Accident> allAccidents = d.accidentsOnWay(myPoints, myAccidents);	//finds all the accidents within a certain radius
-		
-		//PRINT OUT TO THE USER
+		ArrayList<Accident> myAccidents = r.read("bike-data.json");
+		HashSet<Accident> allAccidents = d.accidentsOnWay(myPoints, myAccidents);
 		System.out.println("There has been " + allAccidents.size() + " bike accidents on your route." );
+		System.out.println("Be careful at:");
 		
 		if(allAccidents.size() > 0)
 		{
-			System.out.println("Be careful at:");
 			for (Accident oops: allAccidents)
 			{
-				System.out.println(oops.print());
+				System.out.println(oops);
 			}
 		}
 	}

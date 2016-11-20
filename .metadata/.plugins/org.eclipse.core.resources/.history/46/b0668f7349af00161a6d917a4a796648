@@ -27,13 +27,13 @@ public class GetDirections {
 		
 		//PRINT OUT TO THE USER
 		System.out.println("There has been " + allAccidents.size() + " bike accidents on your route." );
+		System.out.println("Be careful at:");
 		
 		if(allAccidents.size() > 0)
 		{
-			System.out.println("Be careful at:");
 			for (Accident oops: allAccidents)
 			{
-				System.out.println(oops.print());
+				System.out.println(oops);
 			}
 		}
 	}

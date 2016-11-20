@@ -33,7 +33,7 @@ public class GetDirections {
 			System.out.println("Be careful at:");
 			for (Accident oops: allAccidents)
 			{
-				System.out.println(oops.print());
+				System.out.println(oops);
 			}
 		}
 	}
